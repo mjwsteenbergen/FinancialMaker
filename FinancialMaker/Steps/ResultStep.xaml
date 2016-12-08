@@ -1,0 +1,26 @@
+﻿<Page
+    x:Class="FinancialMaker.Steps.ResultStep"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:FinancialMaker.Steps"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <StackPanel Background="Transparent">
+        <TextBlock Text="Here are the results" Style="{StaticResource TitleStyle}" HorizontalAlignment="Center" Margin="0,150,0,0"></TextBlock>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0" Height="500">
+                <TextBox x:Name="Montly" Margin="10" AcceptsReturn="True" IsReadOnly="True"/> 
+            </Grid>
+            <Grid Grid.Column="1" Height="500">
+                <TextBox x:Name="Other" Margin="10" AcceptsReturn="True" IsReadOnly="True"/>
+            </Grid>
+        </Grid>
+    </StackPanel>
+</Page>
+

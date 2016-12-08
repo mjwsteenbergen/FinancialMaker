@@ -82,6 +82,7 @@ namespace FinancialMaker.Steps
 
             foreach (Rule r in _rules)
             {
+                
                 foreach (ExcelObject e in excelLines)
                 {
                     if (r.CheckConditions(e) && e.TransactionType == TransactionType.Montly && _pickedMonth.Month == e.date.Month)
@@ -89,6 +90,11 @@ namespace FinancialMaker.Steps
                         monthlyRes += e.ToExcelMonthlyLines();
                     }
                 }
+                if(r.Consequences.FindAll(consequence => consequence.Column == Column.TransactionType && consequence.Replacement == "monthly").Count > 0)
+                {
+                    monthlyRes += "\n";
+                }
+
             }
 
             Montly.Text = monthlyRes;
@@ -98,5 +104,15 @@ namespace FinancialMaker.Steps
 
         public string StepName => "Step 4 : Copy your results";
         public Color StepColor => Color.FromArgb(255, 229, 20, 0);
+
+        private void GotoRules(object sender, RoutedEventArgs e)
+        {
+            _page.SetPage(new ImportRules(_page, _transactions));
+        }
+
+        private void GotoCalendar(object sender, RoutedEventArgs e)
+        {
+            _page.SetPage(new CalendarStep(_page, _transactions, _rules));
+        }
     }
 }

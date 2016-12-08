@@ -35,7 +35,7 @@ namespace FinancialMaker
             this.Loaded += (o, e) =>
             {
 //                SetPage(new CalendarStep(this, new List<Transaction>(), new List<Rule>()));
-                SetPage(new ImportRules(this, new List<Transaction>()));
+                SetPage(new ImportHTML(this));
                 ContinueButton.Click += (e2, o2) =>
                 {
                     SetPage(nextFrame);

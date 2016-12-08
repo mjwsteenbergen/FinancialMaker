@@ -8,7 +8,11 @@
     mc:Ignorable="d">
 
     <Grid Background="Transparent">
-        <TextBlock Text="Click button to import your rules" Style="{StaticResource TitleStyle}" HorizontalAlignment="Center" Margin="0,150,0,0"></TextBlock>
-        <TextBox x:Name="RulesBox" Text="GG"></TextBox>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <TextBlock Text="Click button to import your rules" Style="{StaticResource TitleStyle}" HorizontalAlignment="Center" Margin="0,150,0,25"></TextBlock>
+        <TextBox Margin="50" Grid.Row="1" x:Name="RulesBox" TextChanged="RulesBox_OnTextChanged" IsSpellCheckEnabled="False" AcceptsReturn="True"></TextBox>
     </Grid>
 </Page>

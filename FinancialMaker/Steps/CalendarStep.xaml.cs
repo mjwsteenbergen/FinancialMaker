@@ -50,17 +50,13 @@ namespace FinancialMaker.Steps
             {
                 MonthBox.Text = "You have picked " + picker.Date.Value.ToString("MMMM");
                 pickedMonth = picker.Date.Value.DateTime;
+                _page.EnableContinue(new ResultStep(_page, _transactions, rules, pickedMonth));
             }
             else
             {
                 MonthBox.Text = "You did not pick a month";
             }
 
-        }
-
-        private void Confirm(object sender, RoutedEventArgs e)
-        {
-            _page.SetPage(new ResultStep(_page, _transactions, rules, pickedMonth));
         }
     }
 }

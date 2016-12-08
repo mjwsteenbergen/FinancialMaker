@@ -72,7 +72,7 @@ namespace FinancialMaker.Logic
         internal string ToExcelMonthlyLines()
         {
             IFormatProvider myFormatProvider = new CultureInfo("nl").NumberFormat;
-            return Amount.ToString(myFormatProvider) + "\n";
+            return Amount.ToString(myFormatProvider);
         }
     }
 

@@ -10,7 +10,6 @@
     <StackPanel Background="Transparent">
         <TextBlock Text="What month would you like to see?" Style="{StaticResource TitleStyle}" HorizontalAlignment="Center" Margin="0,150,0,0"></TextBlock>
         <CalendarDatePicker IsCalendarOpen="True" PlaceholderText="Pick a month" Closed="CalendarDatePicker_OnClosed" HorizontalAlignment="Center" Margin="0,40,0,0"></CalendarDatePicker>
-        <TextBlock x:Name="MonthBox" Text="Test" HorizontalAlignment="Center" Margin="0,40,0,0" Foreground="White" FontSize="20"></TextBlock>
-        <Button Click="Confirm" HorizontalAlignment="Center" Margin="0,10">Pick this month</Button>
+        <TextBlock x:Name="MonthBox" Text="Test" HorizontalAlignment="Center" Margin="0,40,0,0" Foreground="White" FontSize="40"></TextBlock>
     </StackPanel>
 </Page>

@@ -29,6 +29,10 @@ namespace FinancialMaker.Steps
     {
         private readonly MainPage _page;
         private readonly List<Transaction> _transactions;
+        private Memory mem;
+
+        public string StepName => "Step 2 : Import your rules";
+        public Color StepColor => Color.FromArgb(255, 240, 163, 10);
 
         public ImportRules(MainPage page, List<Transaction> transactions)
         {
@@ -36,51 +40,50 @@ namespace FinancialMaker.Steps
             _transactions = transactions;
             this.InitializeComponent();
             LoadRules();
+            this.Loaded += (o, e) =>
+            {
+                CheckText(RulesBox.Text);
+            };
         }
 
         public void LoadRules()
         {
-            Memory mem = new Memory(ApplicationData.Current.RoamingFolder.Path + "\\");
+            mem = new Memory(ApplicationData.Current.RoamingFolder.Path + "\\");
             RulesBox.Text = mem.ReadFile("Rules.txt");
+            
         }
 
-        public string StepName => "Step 2 : Import your rules";
-        public Color StepColor => Color.FromArgb(255, 240, 163, 10);
-
-        private async void ButtonBase_OnClick(object sender, RoutedEventArgs e)
+        private async void RulesBox_OnTextChanged(object sender, TextChangedEventArgs e)
         {
-            FileOpenPicker openPicker = new FileOpenPicker
-            {
-                ViewMode = PickerViewMode.List,
-                SuggestedStartLocation = PickerLocationId.DocumentsLibrary
-            };
-            openPicker.FileTypeFilter.Add(".txt");
-            StorageFile file = await openPicker.PickSingleFileAsync();
+            TextBox box = sender as TextBox;
+            CheckText(box.Text);
+        }
 
-            if (file != null)
+        private void CheckText(string text)
+        {
+            if (text == "")
             {
-                try
-                {
-                    List<Rule> rules = new List<Rule>();
-                    foreach (string s in await FileIO.ReadLinesAsync(file))
-                    {
-                        Rule newRule = RuleParser.Parse(s);
-                        if (newRule != null)
-                        {
-                            rules.Add(newRule);
-                        }
-                    }
-
-                    _page.SetPage(new CalendarStep(_page, _transactions, rules));
-                }
-                catch (Exception e2)
-                {
-                    await (new MessageDialog(e2.Message)).ShowAsync();
-                }
+                _page.Error("There is no text");
+                return;
             }
-            else
+            try
             {
-                await (new MessageDialog("Operation cancelled.")).ShowAsync();
+                List<Rule> rules = new List<Rule>();
+                foreach (string s in text.Split('\r'))
+                {
+                    Rule newRule = RuleParser.Parse(s);
+                    if (newRule != null)
+                    {
+                        rules.Add(newRule);
+                    }
+                }
+
+                _page.EnableContinue(new CalendarStep(_page, _transactions, rules));
+                mem.WriteFile("Rules.txt", text);
+            }
+            catch (Exception e2)
+            {
+                _page.Error(e2.Message);
             }
         }
     }
